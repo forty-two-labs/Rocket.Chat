@@ -18,8 +18,9 @@ Template.loginForm.helpers
 		return 'hidden' unless Template.instance().state.get() in ['register', 'forgot-password', 'email-verification']
 
 	showRegisterLink: ->
-		if Meteor.users.findOne()?
-			return 'hidden'
+		#
+		# if Meteor.users.find().count() is 0
+		# 	return 'hidden'
 		return 'hidden' unless Template.instance().state.get() is 'login'
 
 	showForgotPasswordLink: ->

@@ -220,6 +220,15 @@ Template.room.helpers
 			return {username: username, status: status}
 		return
 
+	userInActiveByUsername: (username) ->
+		console.log 'room.helpers userInActiveByUsername' if window.rocketDebug
+		status = Session.get 'user_' + username + '_status'
+		if status not in ['online', 'away', 'busy']
+			if status is undefined
+				status = 'offline'
+			return {username: username, status: status}
+		return
+
 	roomUsers: ->
 		console.log 'room.helpers roomUsers' if window.rocketDebug
 		room = ChatRoom.findOne(this._id, { reactive: false })
@@ -434,6 +443,7 @@ Template.room.events
 	'click .see-all': (e, instance) ->
 		console.log 'room click .see-all' if window.rocketDebug
 		instance.showUsersOffline.set(!instance.showUsersOffline.get())
+		console.log(instance.showUsersOffline.get())
 
 	"mousedown .edit-message": (e) ->
 		ChatMessages.edit(e.currentTarget.parentNode.parentNode)
