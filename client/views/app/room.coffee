@@ -261,6 +261,12 @@ Template.room.helpers
 				return template.find('.input-message')
 		}
 
+	remoteVideoUrl: ->
+		return Session.get('remoteVideoUrl')
+
+	selfVideoUrl: ->
+		return Session.get('selfVideoUrl')
+
 
 Template.room.events
 
@@ -458,6 +464,12 @@ Template.room.events
 			swal t('Deleted'), t('Your_entry_has_been_deleted'), 'success'
 			ChatMessages.deleteMsg(msg)
 
+	'click .start-video': (event) ->
+		webrtc.start(true)
+
+	'click .stop-video': (event) ->
+		webrtc.stop()
+
 Template.room.onCreated ->
 	console.log 'room.onCreated' if window.rocketDebug
 	# this.scrollOnBottom = true
@@ -494,6 +506,15 @@ Template.room.onRendered ->
 	console.log 'room.rendered' if window.rocketDebug
 	# salva a data da renderização para exibir alertas de novas mensagens
 	$.data(this.firstNode, 'renderedAt', new Date)
+
+	webrtc.to = this.data._id.replace(Meteor.userId(), '')
+	webrtc.onRemoteUrl = (url) ->
+		Session.set('flexOpened', true)
+		Session.set('remoteVideoUrl', url)
+
+	webrtc.onSelfUrl = (url) ->
+		Session.set('flexOpened', true)
+		Session.set('selfVideoUrl', url)
 
 renameRoom = (rid, name) ->
 	console.log 'room renameRoom' if window.rocketDebug
