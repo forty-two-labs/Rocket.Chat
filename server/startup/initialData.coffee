@@ -15,7 +15,7 @@ Meteor.startup ->
 		# if not Meteor.users.findOne()?
 		# 	console.log 'Inserting user admin'.red
 		# 	console.log 'email: admin@admin.com | password: admin'.red
-
+		#
 		# 	id = Meteor.users.insert
 		# 		createdAt: new Date
 		# 		emails: [
@@ -24,5 +24,5 @@ Meteor.startup ->
 		# 		],
 		# 		name: 'Admin'
 		# 		avatarOrigin: 'none'
-
+		#
 		# 	Accounts.setPassword id, 'admin'

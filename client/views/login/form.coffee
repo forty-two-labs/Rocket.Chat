@@ -18,6 +18,8 @@ Template.loginForm.helpers
 		return 'hidden' unless Template.instance().state.get() in ['register', 'forgot-password', 'email-verification']
 
 	showRegisterLink: ->
+		if Meteor.users.findOne()?
+			return 'hidden'
 		return 'hidden' unless Template.instance().state.get() is 'login'
 
 	showForgotPasswordLink: ->
@@ -61,6 +63,8 @@ Template.loginForm.events
 				return
 
 			if instance.state.get() is 'register'
+				if Meteor.users.findOne()?
+					instance.state.set 'login'
 				Meteor.call 'registerUser', formData, (err, result) ->
 					RocketChat.Button.reset(button)
 					Meteor.loginWithPassword formData.email, formData.pass, (error) ->
