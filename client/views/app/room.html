@@ -128,7 +128,7 @@
 											</li>
 										{{/with}}
 									{{/each}}
-									
+
 									{{#each users}}
 										{{#with userInActiveByUsername .}}
 											<li class='user-image user-card-room status-{{status}}'>
@@ -211,6 +211,11 @@
 			{{/if}}
 			<footer>
 				<!-- {{> social}} -->
+				<div class="fields">
+					<div  id="invite-user-field" class='input-text active'>
+						<input  type="email" name='email' placeholder='{{_ "InviteUserByEmail"}}' />
+					</div>
+				</div>
 			</footer>
 		</section>
 	</section>

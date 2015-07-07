@@ -355,6 +355,25 @@ Template.room.events
 		else if event.keyCode is 13 # enter
 			renameRoom this._id, $(event.currentTarget).val()
 
+	'keydown #invite-user-field input': (event) ->
+		console.log 'room keydown #invite-user-field input' if window.rocketDebug
+		email = event.currentTarget.value
+
+		if event.keyCode is 13
+			unless email and /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]+\b/i.test(email)
+				event.currentTarget.setAttribute 'class', 'error'
+			else
+				url = window.location.origin + '/login'
+				rid = this._id
+				Meteor.call 'sendInvitationEmail', email, url, rid, (err, result) ->
+					event.currentTarget.value = ''
+					toastr.success t('sent invitation email successfully')
+					event.currentTarget.setAttribute 'placeholder', 'Yooooooooooooo'
+					Meteor.setTimeout (->
+						event.currentTarget.setAttribute 'placeholder', 'Invite User by Email :)'
+						return
+					), 2500
+
 	'blur #room-title-field': (event) ->
 		console.log 'room blur #room-title-field' if window.rocketDebug
 		# TUDO: create a configuration to select the desired behaviour

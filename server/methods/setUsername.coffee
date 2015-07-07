@@ -6,7 +6,6 @@ Meteor.methods
 		console.log '[methods] setUsername -> '.green, 'userId:', Meteor.userId(), 'arguments:', arguments
 
 		user = Meteor.user()
-
 		if user.username?
 			throw new Meteor.Error 'username-already-setted'
 
@@ -47,7 +46,17 @@ Meteor.methods
 						_id: user._id
 						username: username
 
-		Meteor.users.update({_id: user._id}, {$set: {username: username}})
+
+		invite = Invites.findOne({userId: user._id})
+		rid = invite.rid
+		console.log username
+		console.log rid
+
+		Meteor.users.update {_id: user._id}, {$set: {username: username}}, (error, result) ->
+				if error
+				 console.log error
+				else
+					Meteor.call 'addUserToRoom', { rid: rid, username: username }
 
 		return username
 

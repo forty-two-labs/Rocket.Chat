@@ -36,7 +36,6 @@ Meteor.methods
 			u:
 				_id: newUser._id
 				username: data.username
-
 		ChatMessage.insert
 			rid: data.rid
 			ts: now

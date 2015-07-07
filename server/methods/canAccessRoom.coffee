@@ -9,9 +9,12 @@ Meteor.methods
 
 		unless rid
 			throw new Meteor.Error 'invalid-room', '[methods] canAccessRoom -> Cannot access empty room'
-
-		room = ChatRoom.findOne rid, { fields: { usernames: 1, t: 1, name: 1 } }
-
+		console.log rid.id
+		# room = ChatRoom.findOne rid, { fields: { usernames: 1, t: 1, name: 1 } }
+		room = ChatRoom.findOne rid
+		console.log 'logging room'
+		console.log room
+		console.log room.t
 		if room.t is 'c'
 			canAccess = true
 		else if room.usernames.indexOf(user.username) isnt -1

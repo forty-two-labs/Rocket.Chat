@@ -4,11 +4,27 @@ Meteor.methods
 			email: formData.email
 			password: formData.pass
 
-		userId = Accounts.createUser userData
+		invite = Invites.findOne { token: formData.registerToken }
 
-		Meteor.users.update userId,
-			$set:
-				name: formData.name
+		unless invite.accountCreated
 
-		if userData.email
-			Accounts.sendVerificationEmail(userId, userData.email);
+			userId = Accounts.createUser userData
+
+			Invites.update
+				_id: invite._id
+			,
+				$set:
+					accountCreated: true
+					userId: userId
+
+			Meteor.users.update userId,
+				$set:
+					name: formData.name
+
+			if userData.email
+				Accounts.sendVerificationEmail(userId, userData.email);
+
+		else
+			{
+				err: 'token used'
+			}

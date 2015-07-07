@@ -44,12 +44,13 @@ Router.route '/',
 		if Meteor.userId()
 			Router.go 'home'
 		else
-			Router.go 'login'
+			Router.go 'login', {_token: 42 }
 
-
-Router.route '/login',
+Router.route '/login/:_token',
 	name: 'login'
 
+	data: ->
+		this.params._token
 	onBeforeAction: ->
 		if Meteor.userId()
 			Router.go 'home'

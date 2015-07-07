@@ -1,8 +1,7 @@
 Meteor.methods
 	joinRoom: (rid) ->
-
 		room = ChatRoom.findOne rid
-
+		
 		if room.t isnt 'c'
 			throw new Meteor.Error 403, '[methods] joinRoom -> Not allowed'
 

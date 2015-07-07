@@ -17,10 +17,10 @@ Template.loginForm.helpers
 	showEmail: ->
 		return 'hidden' unless Template.instance().state.get() in ['register', 'forgot-password', 'email-verification']
 
+	showToken: ->
+		return 'hidden' unless Template.instance().state.get() is 'register'
+
 	showRegisterLink: ->
-		#
-		# if Meteor.users.find().count() is 0
-		# 	return 'hidden'
 		return 'hidden' unless Template.instance().state.get() is 'login'
 
 	showForgotPasswordLink: ->
@@ -67,13 +67,13 @@ Template.loginForm.events
 				if Meteor.users.findOne()?
 					instance.state.set 'login'
 				Meteor.call 'registerUser', formData, (err, result) ->
-					RocketChat.Button.reset(button)
-					Meteor.loginWithPassword formData.email, formData.pass, (error) ->
-						if error?.error is 'no-valid-email'
-							toastr.success t('We_have_sent_registration_email')
-							instance.state.set 'login'
-						else
-							Router.go 'index'
+						RocketChat.Button.reset(button)
+						Meteor.loginWithPassword formData.email, formData.pass, (error) ->
+							if error?.error is 'no-valid-email'
+								toastr.success t('We_have_sent_registration_email')
+								instance.state.set 'login'
+							else
+								Router.go 'index'
 			else
 				Meteor.loginWithPassword formData.emailOrUsername, formData.pass, (error) ->
 					RocketChat.Button.reset(button)
@@ -133,6 +133,12 @@ Template.loginForm.onCreated ->
 		return formObj
 
 Template.loginForm.onRendered ->
+	token = this.data
+	if token == null or token == '42'
+		this.state.set 'login'
+	else
+		this.state.set 'register'
+
 	Tracker.autorun =>
 		switch this.state.get()
 			when 'login', 'forgot-password', 'email-verification'
@@ -142,3 +148,4 @@ Template.loginForm.onRendered ->
 			when 'register'
 				Meteor.defer ->
 					$('input[name=name]').select().focus()
+					$('input[name=registerToken]')[0].value = token
