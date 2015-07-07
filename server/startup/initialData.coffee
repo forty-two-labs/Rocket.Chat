@@ -25,4 +25,4 @@ Meteor.startup ->
 				name: 'Admin'
 				avatarOrigin: 'none'
 
-			Accounts.setPassword id, 'admin'
+			Accounts.setPassword id, 'ans00420042'
