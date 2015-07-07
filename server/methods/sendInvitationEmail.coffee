@@ -8,7 +8,7 @@ Meteor.methods
 	    token: token
 	    dateInvited: (new Date).getTime()
 	    accountCreated: false
-	  Invites.insert invitee, (error) ->
+	  Invite.insert invitee, (error) ->
 	    if error
 	      console.log error
 	    else

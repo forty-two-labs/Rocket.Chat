@@ -11,7 +11,7 @@ Meteor.startup ->
 				name: 'general'
 				msgs: 0
 
-
+		
 		if not Meteor.users.findOne()?
 			console.log 'Inserting user admin'.red
 			console.log 'email: admin@admin.com | password: admin'.red
@@ -25,4 +25,4 @@ Meteor.startup ->
 				name: 'Admin'
 				avatarOrigin: 'none'
 
-			Accounts.setPassword id, 'ans00420042'
+			Accounts.setPassword id, 'admin'

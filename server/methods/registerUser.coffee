@@ -4,13 +4,13 @@ Meteor.methods
 			email: formData.email
 			password: formData.pass
 
-		invite = Invites.findOne { token: formData.registerToken }
+		invite = Invite.findOne { token: formData.registerToken }
 
 		unless invite.accountCreated
 
 			userId = Accounts.createUser userData
 
-			Invites.update
+			Invite.update
 				_id: invite._id
 			,
 				$set:

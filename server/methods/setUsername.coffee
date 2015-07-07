@@ -47,7 +47,7 @@ Meteor.methods
 						username: username
 
 
-		invite = Invites.findOne({userId: user._id})
+		invite = Invite.findOne({userId: user._id})
 		rid = invite.rid
 		console.log username
 		console.log rid
