@@ -124,7 +124,6 @@
 					# toBottom() if self.scrollable
 
 	keydown = (rid, event) ->
-		debugger
 		input = event.currentTarget
 		k = event.which
 		resize(input)
