@@ -1,7 +1,6 @@
 <template name="chatRoomItem">
 	<li class="link-room-{{rid}} {{active}} {{#if unread}}has-unread{{/if}} {{#if alert}}has-alert{{/if}}">
 		<a href="{{ pathFor 'room' _id=rid}}" title="{{name}}">
-			{{rid}}
 			{{#if unread}}
 				<span class="unread">{{unread}}</span>
 			{{/if}}
