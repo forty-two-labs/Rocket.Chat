@@ -47,16 +47,17 @@ Meteor.methods
 						username: username
 
 
-		invite = Invite.findOne({userId: user._id})
-		rid = invite.rid
-		console.log username
-		console.log rid
+
+
 
 		Meteor.users.update {_id: user._id}, {$set: {username: username}}, (error, result) ->
 				if error
 				 console.log error
 				else
-					Meteor.call 'addUserToRoom', { rid: rid, username: username }
+					invite = Invite.findOne({userId: user._id})
+					if invite
+						rid = invite.rid
+						Meteor.call 'addUserToRoom', { rid: rid, username: username }
 
 		return username
 
